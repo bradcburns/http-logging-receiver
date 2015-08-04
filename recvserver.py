@@ -8,7 +8,7 @@ def ReceivePostLog():
 
 	strLogLine = FormatLogLine(request.forms, request.remote_addr)
 
-	if WriteLogLine('httplogger.log',strLogLine):
+	if WriteLogLine('httplogger',strLogLine):
 		response.status = 200
 		return 'log accepted.'
 	else:
@@ -45,7 +45,7 @@ def UnixToLocalTimeString(UnixTimeInDecimal):
 	return ret
 
 def WriteLogLine(strFilename,strLogLine):
-	with open(strProcess + '.log','w') as f:
+	with open(strFilename + '.log','a') as f:
 		f.write(strLogLine)
 
 	return True
