@@ -8,7 +8,7 @@ def ReceivePostLog():
 
 	strLogLine = FormatLogLine(request.forms, request.remote_addr)
 
-	if WriteLogLine(strLogLine):
+	if WriteLogLine('httplogger.log',strLogLine):
 		response.status = 200
 		return 'log accepted.'
 	else:
