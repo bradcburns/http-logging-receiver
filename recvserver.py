@@ -36,7 +36,7 @@ def FormatLogLine(RawQueryData,RequestIPAddr):
 		strMsg,
 		strExceptionData])
 
-	strLogLine = ' > '.join(listLogLine)
+	strLogLine = ' > '.join(listLogLine) + '\n'
 
 	return strLogLine
 
