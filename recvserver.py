@@ -1,4 +1,4 @@
-import ConfigParse
+import ConfigParser
 from sys import argv
 from bottle import route, run, request, response, post
 from time import localtime, strftime
