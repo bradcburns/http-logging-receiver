@@ -1,0 +1,8 @@
+;sample configuration file for recvserver.
+;these are the only options.
+;IPAddress specifies the IP the server will listen on.
+;Port specifies the same for the port.
+
+[NETWORK]
+IPAddress=127.0.0.1
+Port=8080
