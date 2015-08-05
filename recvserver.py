@@ -63,5 +63,5 @@ def GetConfig(pathConfigFile):
 
 if __name__ == '__main__':
 	config = GetConfig(argv[1])
-	run(hostname=config['hostname'],port=config['port'])
+	run(host=config['hostname'],port=config['port'])
 
