@@ -2,11 +2,12 @@ import ConfigParser
 from sys import argv
 from bottle import route, run, request, response, post
 from time import localtime, strftime
+import json
 
 @post('/log')
 def ReceivePostLog():
 
-	strLogLine = FormatLogLine(request.forms, request.remote_addr)
+	strLogLine = FormatLogJSON(request.forms, request.remote_addr)
 
 	if WriteLogLine('httplogger',strLogLine):
 		response.status = 200
@@ -15,7 +16,29 @@ def ReceivePostLog():
 		response.status = 500
 		return 'something went wrong.'
 
+def FormatLogJSON(RawQueryData,RequestIPAddr):
+
+	strHumanTime = UnixToLocalTimeString(localtime(float(RawQueryData['created'])))
+
+	dictRetJSON = ({'timestamp':strHumanTime,
+		'name':RawQueryData['name'],
+		'hostIP':RequestIPAddr,
+		'description':RawQueryData['msg'],
+		'filename':RawQueryData['filename'],
+		'severity':RawQueryData['levelname']})
+
+	if not (RawQueryData['exc_info']) == 'None':
+		dictRetJSON['exc_info'] = RawQueryData['exc_info'] + ' at line ' + RawQueryData['lineno']
+	else:
+		dictRetJSON['exc_info'] = ''
+
+	dictRetJSON['lineno'] = RawQueryData['lineno']
+
+	return json.dumps(dictRetJSON) + "\n"
+
+
 def FormatLogLine(RawQueryData,RequestIPAddr):
+	#unused for now
 	strTimestamp = UnixToLocalTimeString(localtime(float(RawQueryData['created'])))
 	strLoggerName = RawQueryData['name']
 	strIP = RequestIPAddr
